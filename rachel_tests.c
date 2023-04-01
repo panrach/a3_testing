@@ -171,14 +171,7 @@ int compare_linked_list(intNode *actual, const char *expected)
 	}
 	
 	sort(buffer);
-	rc = strcmp(buffer, expected);
-	
-	if (rc != 0)
-	{
-		printf("expected: %s actual: %s\n", expected, buffer);
-	}
-	
-	return rc;
+	return strcmp(buffer, expected);
 }
 
 void test_k_dist()
