@@ -64,6 +64,7 @@ void test_ingredient_index()
 	
 	// 2.4
 	printf("2.4: %s", ingredient_index("strawberry soymilk") == 4 ? "PASSED\n" : "FAILED\n");
+	clear_list();
 }
 
 
