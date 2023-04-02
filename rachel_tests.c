@@ -1,4 +1,3 @@
-// run each test seperately
 #include "ingredient_graph.c"
 
 void make_list()
@@ -194,6 +193,7 @@ void test_k_dist()
 	
 	char expected[1024];
 	
+	clear_list();
 	// 4.1
 	intNode *head=NULL;
     head = related_k_dist(head,"soymilk",11,0);
@@ -249,7 +249,7 @@ void test_related_with_restrictions()
 	// 5.10: both k values bigger than the matrix
 	
 	char expected[1024];
-	
+	clear_list();
 	// 5.1
 	intNode *head=NULL;
 	head = related_with_restrictions("soymilk", "sesame", 1, 1);
@@ -285,6 +285,7 @@ void test_related_with_restrictions()
 	strcpy(expected, "fresh breadcrumbs,");
 	sort(expected);
 	printf("5.6: %s", compare_linked_list(head, expected) == 0 ? " PASSED\n" : " FAILED\n");
+	print_ingredients(head);
 	
 	// 5.7
 	head = related_with_restrictions("gruyere cheese", "soymilk", 1, 11);
