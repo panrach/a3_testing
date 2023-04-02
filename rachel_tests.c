@@ -395,6 +395,8 @@ void test_substitute_ingredient()
 	// 6.8: 10 ingredient recipe: sub soymilk
 	// 6.9: 10 ingredient recipe: adj matrix is 0
 	// 6.10: 10 ingredient recipe: sub soymilk; soymilk has the strongest weight
+	// 6.11: 10 ingredient recipe: sub soymilk; normal matrix
+	// 6.12: to_change is not in the recipe
 	
 	// 6.1
 	char expected[1024];
@@ -430,9 +432,7 @@ void test_substitute_ingredient()
 	set_recipe_5(recipe);
 	substitute_ingredient(recipe,"soymilk");
 	strcpy(expected, "prepared horseradish,medium shrimp,tomato juice,turkey,artichoke hearts,,,,,,");
-	strcpy(expected2, "prepared horseradish,medium shrimp,tomato juice,turkey,fresh breadcrumbs,,,,,,");
 	sort(expected);
-	sort(expected2);
 	printf("6.3: %s", (compare_array(recipe, expected) == 0) || (compare_array(recipe, expected2) == 0) ? "PASSED\n" : "FAILED\n");
 	//print_recipe(recipe);
 	
@@ -501,6 +501,7 @@ void test_substitute_ingredient()
 	strcpy(expected, "medium shrimp,prepared horseradish,turkey,tomato juice,fresh breadcrumbs,artichoke hearts,gruyere cheese,sunflower seeds,quinoa,soymilk,");
 	sort(expected);
 	printf("6.9: %s", (compare_array(recipe, expected) == 0)? "PASSED\n" : "FAILED\n");
+	//print_recipe(recipe);
 	
 	// 6.10
 	set_recipe_10(recipe);
@@ -514,6 +515,20 @@ void test_substitute_ingredient()
 	sort(expected);
 	printf("6.10: %s", (compare_array(recipe, expected) == 0)? "PASSED\n" : "FAILED\n");
 	//print_recipe(recipe);
+	
+	// 6.11
+	ghetto_load_ingredients();
+	substitute_ingredient(recipe,"soymilk");
+	strcpy(expected, "medium shrimp,prepared horseradish,turkey,tomato juice,fresh breadcrumbs,artichoke hearts,gruyere cheese,sunflower seeds,quinoa,soymilk,");
+	sort(expected);
+	printf("6.11: %s", (compare_array(recipe, expected) == 0)? "PASSED\n" : "FAILED\n");
+	
+	// 6.12
+	substitute_ingredient(recipe,"peanuts");
+	strcpy(expected, "medium shrimp,prepared horseradish,turkey,tomato juice,fresh breadcrumbs,artichoke hearts,gruyere cheese,sunflower seeds,quinoa,soymilk,");
+	sort(expected);
+	printf("6.12: %s", (compare_array(recipe, expected) == 0)? "PASSED\n" : "FAILED\n");
+	
 
 }
 
