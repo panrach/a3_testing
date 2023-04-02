@@ -285,7 +285,6 @@ void test_related_with_restrictions()
 	strcpy(expected, "fresh breadcrumbs,");
 	sort(expected);
 	printf("5.6: %s", compare_linked_list(head, expected) == 0 ? " PASSED\n" : " FAILED\n");
-	print_ingredients(head);
 	
 	// 5.7
 	head = related_with_restrictions("gruyere cheese", "soymilk", 1, 11);
