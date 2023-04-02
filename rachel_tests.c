@@ -64,7 +64,6 @@ void test_ingredient_index()
 	
 	// 2.4
 	printf("2.4: %s", ingredient_index("strawberry soymilk") == 4 ? "PASSED\n" : "FAILED\n");
-	clear_list();
 }
 
 
@@ -172,7 +171,15 @@ int compare_linked_list(intNode *actual, const char *expected)
 	}
 	
 	sort(buffer);
-	return strcmp(buffer, expected);
+	rc = strcmp(buffer, expected);
+	
+	if (rc != 0)
+	{
+		//printf("expected: %s actual: %s\n", expected, buffer);
+
+	}
+	
+	return rc;
 }
 
 void test_k_dist()
@@ -182,7 +189,7 @@ void test_k_dist()
 	// 4.3: Distance 2 from soymilk
 	// 4.4: Distance 5 from artichoke hearts
 	// 4.5: Distance 3 from turkey
-	// 4.5: k greater than the size of matrix
+	// 4.6: k greater than the size of matrix
 	
 	char expected[1024];
 	
@@ -227,10 +234,88 @@ void test_k_dist()
 	printf("4.6: %s", compare_linked_list(head, expected) == 0 ? " PASSED\n" : " FAILED\n");
 }
 
+void test_related_with_restrictions()
+{
+	// 5.1: Empty matrix
+	// 5.2: Distance 1 from soymilk. Avoid ingredient dne
+	// 5.3: Distance 1 from soymilk. Avoid quinoa distance 1
+	// 5.4: Distance 4 from soymilk. Avoid quinoa distance 1
+	// 5.5: Avoid distance bigger than source distance. Distance 3 from soymilk. Avoid quinoa distance 4
+	// 5.6: Avoid distance bigger than source distance. Distance 1 from cheese. Avoid soymilk distance 4
+	// 5.7: Avoid distance bigger than the whole matrix. Distance 1 from cheese. Avoid soymilk distance 11
+	// 5.8: Source distance bigger than the whole matrix. Distance 11 from soymilk. Avoid quinoa distance 1
+	// 5.9: Distance 2 from turkey. Avoid soymilk distance 1
+	// 5.10: both k values bigger than the matrix
+	
+	char expected[1024];
+	
+	// 5.1
+	intNode *head=NULL;
+	head = related_with_restrictions("soymilk", "sesame", 1, 1);
+	printf("4.1: %s", head == NULL ? " PASSED\n" : " FAILED\n");
+	
+	// 5.2
+	ghetto_load_ingredients();
+	head = related_with_restrictions("soymilk", "sesame", 1, 1);
+	strcpy(expected, "sunflower seeds,");
+	sort(expected);
+	printf("5.2: %s", compare_linked_list(head, expected) == 0 ? " PASSED\n" : " FAILED\n");
+	
+	// 5.3
+	head = related_with_restrictions("soymilk", "quinoa", 1, 1);
+	strcpy(expected, "");
+	sort(expected);
+	printf("5.3: %s", compare_linked_list(head, expected) == 0 ? " PASSED\n" : " FAILED\n");
+	
+	// 5.4
+	head = related_with_restrictions("soymilk", "quinoa", 4, 1);
+	strcpy(expected, "soymilk,turkey,gruyere cheese,medium shrimp,");
+	sort(expected);
+	printf("5.4: %s", compare_linked_list(head, expected) == 0 ? " PASSED\n" : " FAILED\n");
+	
+	// 5.5
+	head = related_with_restrictions("soymilk", "quinoa", 3, 4);
+	strcpy(expected, "");
+	sort(expected);
+	printf("5.5: %s", compare_linked_list(head, expected) == 0 ? " PASSED\n" : " FAILED\n");
+	
+	// 5.6
+	head = related_with_restrictions("gruyere cheese", "soymilk", 1, 4);
+	strcpy(expected, "fresh breadcrumbs,");
+	sort(expected);
+	printf("5.6: %s", compare_linked_list(head, expected) == 0 ? " PASSED\n" : " FAILED\n");
+	
+	// 5.7
+	head = related_with_restrictions("gruyere cheese", "soymilk", 1, 11);
+	strcpy(expected, "");
+	sort(expected);
+	printf("5.7: %s", compare_linked_list(head, expected) == 0 ? " PASSED\n" : " FAILED\n");
+	
+	// 5.8
+	head = related_with_restrictions("soymilk", "quinoa", 11, 1);
+	strcpy(expected, "soymilk,turkey,gruyere cheese,fresh breadcrumbs,tomato juice,prepared horseradish,medium shrimp,");
+	sort(expected);
+	printf("5.8: %s", compare_linked_list(head, expected) == 0 ? " PASSED\n" : " FAILED\n");
+	
+	// 5.9
+	head = related_with_restrictions("turkey", "soymilk", 2, 1);
+	strcpy(expected, "quinoa,turkey,artichoke hearts,medium shrimp,gruyere cheese,");
+	sort(expected);
+	printf("5.9: %s", compare_linked_list(head, expected) == 0 ? " PASSED\n" : " FAILED\n");
+	
+	// 5.10
+	head = related_with_restrictions("turkey", "soymilk", 11, 11);
+	strcpy(expected, "");
+	sort(expected);
+	printf("5.10: %s", compare_linked_list(head, expected) == 0 ? "PASSED\n" : "FAILED\n");
+    
+}
+
 int main()
 {
 	//test_print_ingredients();
 	//test_ingredient_index();
 	//test_related_ingredients();
 	//test_k_dist();
+	//test_related_with_restrictions();
 }
