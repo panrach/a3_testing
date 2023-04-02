@@ -233,7 +233,6 @@ void test_k_dist()
 	strcpy(expected, "turkey,gruyere cheese,fresh breadcrumbs,tomato juice,prepared horseradish,medium shrimp,artichoke hearts,quinoa,soymilk,sunflower seeds,");
 	sort(expected);
 	printf("4.6: %s", compare_linked_list(head, expected) == 0 ? " PASSED\n" : " FAILED\n");
-	
 }
 
 void test_related_with_restrictions()
@@ -329,7 +328,193 @@ void test_related_with_restrictions()
 	strcpy(expected, "sunflower seeds,quinoa,turkey,artichoke hearts,gruyere cheese,fresh breadcrumbs,tomato juice,prepared horseradish,medium shrimp,");
 	sort(expected);
 	printf("5.11: %s", compare_linked_list(head, expected) == 0 ? "PASSED\n" : "FAILED\n");
-    
+}
+
+int compare_array(char actual[10][MAX_STR_LEN], const char *expected)
+{
+	char buffer[1024];
+	buffer[0] = '\0';
+	
+	int rc;
+	
+	for (int i = 0; i < 10; i++)
+	{
+		strcat(buffer, actual[i]);
+		strcat(buffer, ",");
+	}
+	sort(buffer);
+	//printf("actual: %s, expected: %s\n", buffer, expected);
+	return strcmp(buffer, expected);
+}
+
+void set_recipe_10(char recipe[10][MAX_STR_LEN])
+{
+	strcpy(recipe[0], "medium shrimp");
+	strcpy(recipe[1], "prepared horseradish");
+	strcpy(recipe[2], "turkey");
+	strcpy(recipe[3], "soymilk");
+	strcpy(recipe[4], "tomato juice");
+	strcpy(recipe[5], "fresh breadcrumbs");
+	strcpy(recipe[6], "artichoke hearts");
+	strcpy(recipe[7], "gruyere cheese");
+	strcpy(recipe[8], "sunflower seeds");
+	strcpy(recipe[9], "quinoa");
+}
+
+void set_recipe_5(char recipe[10][MAX_STR_LEN])
+{
+	strcpy(recipe[0], "medium shrimp");
+	strcpy(recipe[1], "prepared horseradish");
+	strcpy(recipe[2], "turkey");
+	strcpy(recipe[3], "soymilk");
+	strcpy(recipe[4], "tomato juice");
+	strcpy(recipe[5], "");
+	strcpy(recipe[6], "");
+	strcpy(recipe[7], "");
+	strcpy(recipe[8], "");
+	strcpy(recipe[9], "");
+}
+
+void print_recipe(char recipe[10][MAX_STR_LEN])
+{
+	for (int i = 0; i < 10; i++)
+	{
+		printf("%s\n", recipe[i]);
+	}
+}
+
+void test_substitute_ingredient()
+{
+	// 6.1: Empty
+	// 6.2: 2 ingredient recipe
+	// 6.3: 5 ingredient recipe; sub soymilk
+	// 6.4: 5 ingredient recipe; sub turkey
+	// 6.5: 5 ingredient recipe; sub medium shrimp
+	// 6.6: 5 ingredient recipe: sub tomato juice
+	// 6.7: 5 ingredient recipe: sub prepared horseradish
+	// 6.8: 10 ingredient recipe: sub soymilk
+	// 6.9: 10 ingredient recipe: adj matrix is 0
+	// 6.10: 10 ingredient recipe: sub soymilk; soymilk has the strongest weight
+	
+	// 6.1
+	char expected[1024];
+	char expected2[1024];
+	char expected3[1024];
+	char recipe[10][MAX_STR_LEN]={"",
+								 "",
+								 "",
+								 "",
+								 "",
+								 "",
+								 "",
+								 "",
+								 "",
+								 ""};
+	ghetto_load_ingredients();
+	substitute_ingredient(recipe,"tomato juice");
+	strcpy(expected, ",,,,,,,,,,");
+	sort(expected);
+	printf("6.1: %s", compare_array(recipe, expected) == 0 ? "PASSED\n" : "FAILED\n");
+	
+	// 6.2
+	strcpy(recipe[0], "medium shrimp");
+	strcpy(recipe[1], "prepared horseradish");
+	
+	substitute_ingredient(recipe,"prepared horseradish");
+	strcpy(expected, "medium shrimp,artichoke hearts,,,,,,,,,");
+	sort(expected);
+	printf("6.2: %s", compare_array(recipe, expected) == 0 ? "PASSED\n" : "FAILED\n");
+	//print_recipe(recipe);
+	
+	// 6.3
+	set_recipe_5(recipe);
+	substitute_ingredient(recipe,"soymilk");
+	strcpy(expected, "prepared horseradish,medium shrimp,tomato juice,turkey,artichoke hearts,,,,,,");
+	strcpy(expected2, "prepared horseradish,medium shrimp,tomato juice,turkey,fresh breadcrumbs,,,,,,");
+	sort(expected);
+	sort(expected2);
+	printf("6.3: %s", (compare_array(recipe, expected) == 0) || (compare_array(recipe, expected2) == 0) ? "PASSED\n" : "FAILED\n");
+	//print_recipe(recipe);
+	
+	// 6.4
+	set_recipe_5(recipe);
+	substitute_ingredient(recipe,"turkey");
+	strcpy(expected, "prepared horseradish,medium shrimp,tomato juice,fresh breadcrumbs,soymilk,,,,,,");
+	strcpy(expected2, "prepared horseradish,medium shrimp,tomato juice,artichoke hearts,soymilk,,,,,,");
+	strcpy(expected3, "prepared horseradish,medium shrimp,tomato juice,sunflower seeds,soymilk,,,,,,");
+	sort(expected);
+	sort(expected2);
+	sort(expected3);
+	printf("6.4: %s", (compare_array(recipe, expected) == 0) || (compare_array(recipe, expected2)) == 0 || ((compare_array(recipe, expected3)))? "PASSED\n" : "FAILED\n");
+	
+	// 6.5
+	set_recipe_5(recipe);
+	substitute_ingredient(recipe,"medium shrimp");
+	strcpy(expected, "soymilk,turkey,fresh breadcrumbs,tomato juice,prepared horseradish,,,,,,");
+	strcpy(expected2, "soymilk,turkey,sunflower seeds,tomato juice,prepared horseradish,,,,,,");
+	sort(expected);
+	sort(expected2);
+	printf("6.5: %s", (compare_array(recipe, expected) == 0) || (compare_array(recipe, expected2)) == 0? "PASSED\n" : "FAILED\n");
+	//print_recipe(recipe);
+	
+	// 6.6
+	set_recipe_5(recipe);
+	substitute_ingredient(recipe,"tomato juice");
+	strcpy(expected, "soymilk,turkey,medium shrimp,artichoke hearts,prepared horseradish,,,,,,");
+	strcpy(expected2, "soymilk,turkey,medium shrimp,sunflower seeds,prepared horseradish,,,,,,");
+	sort(expected);
+	sort(expected2);
+	printf("6.6: %s", (compare_array(recipe, expected) == 0) || (compare_array(recipe, expected2)) == 0? "PASSED\n" : "FAILED\n");
+	//print_recipe(recipe);
+	
+	// 6.7
+	set_recipe_5(recipe);
+	substitute_ingredient(recipe,"prepared horseradish");
+	strcpy(expected, "soymilk,turkey,medium shrimp,artichoke hearts,tomato juice,,,,,,");
+	strcpy(expected2, "soymilk,turkey,medium shrimp,fresh breadcrumbs,tomato juice,,,,,,");
+	strcpy(expected3, "soymilk,turkey,medium shrimp,sunflower seeds,tomato juice,,,,,,");
+	sort(expected);
+	sort(expected2);
+	sort(expected3);
+	printf("6.7: %s", (compare_array(recipe, expected) == 0) || (compare_array(recipe, expected2)) == 0 || ((compare_array(recipe, expected3)))? "PASSED\n" : "FAILED\n");
+	
+	// 6.8
+	set_recipe_10(recipe);
+	substitute_ingredient(recipe,"soymilk");
+	strcpy(expected, "medium shrimp,prepared horseradish,turkey,tomato juice,fresh breadcrumbs,artichoke hearts,gruyere cheese,sunflower seeds,quinoa,,");
+	sort(expected);
+	printf("6.8: %s", (compare_array(recipe, expected) == 0)? "PASSED\n" : "FAILED\n");
+	//print_recipe(recipe);
+	
+	// 6.9
+	set_recipe_10(recipe);
+	
+	for (int i = 0; i < 10; i++)
+	{
+		for (int j = 0; j < 10; j++)
+		{
+			AdjMat[i][j] = 0;
+		}
+	}
+	
+	substitute_ingredient(recipe,"soymilk");
+	strcpy(expected, "medium shrimp,prepared horseradish,turkey,tomato juice,fresh breadcrumbs,artichoke hearts,gruyere cheese,sunflower seeds,quinoa,,");
+	sort(expected);
+	printf("6.9: %s", (compare_array(recipe, expected) == 0)? "PASSED\n" : "FAILED\n");
+	
+	// 6.10
+	set_recipe_10(recipe);
+	for (int i = 0; i < 10; i++)
+	{
+		AdjMat[3][i] = 10;
+	}
+	
+	substitute_ingredient(recipe,"soymilk");
+	strcpy(expected, "medium shrimp,prepared horseradish,turkey,tomato juice,fresh breadcrumbs,artichoke hearts,gruyere cheese,sunflower seeds,quinoa,,");
+	sort(expected);
+	printf("6.10: %s", (compare_array(recipe, expected) == 0)? "PASSED\n" : "FAILED\n");
+	//print_recipe(recipe);
+
 }
 
 int main()
@@ -339,4 +524,6 @@ int main()
 	//test_related_ingredients();
 	//test_k_dist();
 	//test_related_with_restrictions();
+	//test_substitute_ingredient();
+	//print_adj();
 }
