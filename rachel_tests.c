@@ -192,8 +192,8 @@ void test_k_dist()
 	// 4.6: k greater than the size of matrix
 	
 	char expected[1024];
+	memset(AdjMat, 0, sizeof(AdjMat));
 	
-	clear_list();
 	// 4.1
 	intNode *head=NULL;
     head = related_k_dist(head,"soymilk",11,0);
@@ -208,7 +208,7 @@ void test_k_dist()
 	
 	// 4.3
 	head = deleteList(head);
-	head=  related_k_dist(head,"soymilk",2,0);
+	head =  related_k_dist(head,"soymilk",2,0);
 	strcpy(expected, "quinoa,soymilk,sunflower seeds,");
 	sort(expected);
 	printf("4.3: %s", compare_linked_list(head, expected) == 0 ? " PASSED\n" : " FAILED\n");
@@ -249,7 +249,8 @@ void test_related_with_restrictions()
 	// 5.10: both k values bigger than the matrix
 	
 	char expected[1024];
-	clear_list();
+	memset(AdjMat, 0, sizeof(AdjMat));
+	
 	// 5.1
 	intNode *head=NULL;
 	head = related_with_restrictions("soymilk", "sesame", 1, 1);
