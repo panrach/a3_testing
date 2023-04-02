@@ -252,7 +252,7 @@ void test_related_with_restrictions()
 	// 5.1
 	intNode *head=NULL;
 	head = related_with_restrictions("soymilk", "sesame", 1, 1);
-	printf("4.1: %s", head == NULL ? " PASSED\n" : " FAILED\n");
+	printf("5.1: %s", head == NULL ? " PASSED\n" : " FAILED\n");
 	
 	// 5.2
 	ghetto_load_ingredients();
