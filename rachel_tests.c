@@ -233,6 +233,7 @@ void test_k_dist()
 	strcpy(expected, "turkey,gruyere cheese,fresh breadcrumbs,tomato juice,prepared horseradish,medium shrimp,artichoke hearts,quinoa,soymilk,sunflower seeds,");
 	sort(expected);
 	printf("4.6: %s", compare_linked_list(head, expected) == 0 ? " PASSED\n" : " FAILED\n");
+	
 }
 
 void test_related_with_restrictions()
@@ -247,69 +248,87 @@ void test_related_with_restrictions()
 	// 5.8: Source distance bigger than the whole matrix. Distance 11 from soymilk. Avoid quinoa distance 1
 	// 5.9: Distance 2 from turkey. Avoid soymilk distance 1
 	// 5.10: both k values bigger than the matrix
+	// 5.11: avoid value 0
 	
 	char expected[1024];
 	memset(AdjMat, 0, sizeof(AdjMat));
 	
 	// 5.1
 	intNode *head=NULL;
+	head = deleteList(head);
 	head = related_with_restrictions("soymilk", "sesame", 1, 1);
 	printf("5.1: %s", head == NULL ? " PASSED\n" : " FAILED\n");
 	
 	// 5.2
 	ghetto_load_ingredients();
+	head = deleteList(head);
 	head = related_with_restrictions("soymilk", "sesame", 1, 1);
 	strcpy(expected, "sunflower seeds,");
 	sort(expected);
 	printf("5.2: %s", compare_linked_list(head, expected) == 0 ? " PASSED\n" : " FAILED\n");
 	
 	// 5.3
+	head = deleteList(head);
 	head = related_with_restrictions("soymilk", "quinoa", 1, 1);
 	strcpy(expected, "");
 	sort(expected);
 	printf("5.3: %s", compare_linked_list(head, expected) == 0 ? " PASSED\n" : " FAILED\n");
 	
 	// 5.4
+	head = deleteList(head);
 	head = related_with_restrictions("soymilk", "quinoa", 4, 1);
 	strcpy(expected, "soymilk,turkey,gruyere cheese,medium shrimp,");
 	sort(expected);
 	printf("5.4: %s", compare_linked_list(head, expected) == 0 ? " PASSED\n" : " FAILED\n");
 	
 	// 5.5
+	head = deleteList(head);
 	head = related_with_restrictions("soymilk", "quinoa", 3, 4);
 	strcpy(expected, "");
 	sort(expected);
 	printf("5.5: %s", compare_linked_list(head, expected) == 0 ? " PASSED\n" : " FAILED\n");
 	
 	// 5.6
+	head = deleteList(head);
 	head = related_with_restrictions("gruyere cheese", "soymilk", 1, 4);
 	strcpy(expected, "fresh breadcrumbs,");
 	sort(expected);
 	printf("5.6: %s", compare_linked_list(head, expected) == 0 ? " PASSED\n" : " FAILED\n");
 	
 	// 5.7
+	head = deleteList(head);
 	head = related_with_restrictions("gruyere cheese", "soymilk", 1, 11);
 	strcpy(expected, "");
 	sort(expected);
 	printf("5.7: %s", compare_linked_list(head, expected) == 0 ? " PASSED\n" : " FAILED\n");
 	
 	// 5.8
+	head = deleteList(head);
 	head = related_with_restrictions("soymilk", "quinoa", 11, 1);
 	strcpy(expected, "soymilk,turkey,gruyere cheese,fresh breadcrumbs,tomato juice,prepared horseradish,medium shrimp,");
 	sort(expected);
 	printf("5.8: %s", compare_linked_list(head, expected) == 0 ? " PASSED\n" : " FAILED\n");
 	
 	// 5.9
+	head = deleteList(head);
 	head = related_with_restrictions("turkey", "soymilk", 2, 1);
 	strcpy(expected, "quinoa,turkey,artichoke hearts,medium shrimp,gruyere cheese,");
 	sort(expected);
 	printf("5.9: %s", compare_linked_list(head, expected) == 0 ? " PASSED\n" : " FAILED\n");
 	
 	// 5.10
+	head = deleteList(head);
 	head = related_with_restrictions("turkey", "soymilk", 11, 11);
 	strcpy(expected, "");
 	sort(expected);
 	printf("5.10: %s", compare_linked_list(head, expected) == 0 ? "PASSED\n" : "FAILED\n");
+	
+	// 5.11
+	head = deleteList(head);
+	head = related_with_restrictions("turkey", "soymilk", 11, 0);
+	strcpy(expected, "sunflower seeds,quinoa,turkey,artichoke hearts,gruyere cheese,fresh breadcrumbs,tomato juice,prepared horseradish,medium shrimp,");
+	sort(expected);
+	printf("5.11: %s", compare_linked_list(head, expected) == 0 ? "PASSED\n" : "FAILED\n");
     
 }
 
