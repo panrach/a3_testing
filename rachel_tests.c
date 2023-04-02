@@ -1,3 +1,4 @@
+// run each test seperately
 #include "ingredient_graph.c"
 
 void make_list()
