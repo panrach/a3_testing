@@ -445,7 +445,7 @@ void test_substitute_ingredient()
 	sort(expected);
 	sort(expected2);
 	sort(expected3);
-	printf("6.4: %s", (compare_array(recipe, expected) == 0) || (compare_array(recipe, expected2)) == 0 || ((compare_array(recipe, expected3)))? "PASSED\n" : "FAILED\n");
+	printf("6.4: %s", (compare_array(recipe, expected) == 0) || (compare_array(recipe, expected2)) == 0 || ((compare_array(recipe, expected3)) == 0)? "PASSED\n" : "FAILED\n");
 	
 	// 6.5
 	set_recipe_5(recipe);
