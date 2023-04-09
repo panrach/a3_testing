@@ -1,4 +1,4 @@
-#include "ingredient_graph.c"
+#include "ingredient_graphs.c"
 
 void make_list()
 {
@@ -106,7 +106,7 @@ void ghetto_load_ingredients(void)
 void print_adj()
 {
 	// this functions prints the adj matrix
-	ghetto_load_ingredients();
+	//ghetto_load_ingredients();
 	for (int row = 0; row < MAT_SIZE; row++)
 	{
 		for (int col = 0; col < MAT_SIZE; col++)
@@ -190,6 +190,7 @@ void test_k_dist()
 	// 4.4: Distance 5 from artichoke hearts
 	// 4.5: Distance 3 from turkey
 	// 4.6: k greater than the size of matrix
+	// 4.7: k is 0
 	
 	char expected[1024];
 	memset(AdjMat, 0, sizeof(AdjMat));
@@ -206,12 +207,14 @@ void test_k_dist()
 	sort(expected);
 	printf("4.2: %s", compare_linked_list(head, expected) == 0 ? " PASSED\n" : " FAILED\n");
 	
+	
 	// 4.3
 	head = deleteList(head);
 	head =  related_k_dist(head,"soymilk",2,0);
 	strcpy(expected, "quinoa,soymilk,sunflower seeds,");
 	sort(expected);
 	printf("4.3: %s", compare_linked_list(head, expected) == 0 ? " PASSED\n" : " FAILED\n");
+
 	
 	// 4.4
 	head = deleteList(head);
@@ -226,6 +229,7 @@ void test_k_dist()
 	strcpy(expected, "artichoke hearts,medium shrimp,prepared horseradish,gruyere cheese,fresh breadcrumbs,quinoa,sunflower seeds,turkey,");
 	sort(expected);
 	printf("4.5: %s", compare_linked_list(head, expected) == 0 ? " PASSED\n" : " FAILED\n");
+		print_ingredients(head);
 	
 	// 4.6
 	head = deleteList(head);
@@ -233,6 +237,16 @@ void test_k_dist()
 	strcpy(expected, "turkey,gruyere cheese,fresh breadcrumbs,tomato juice,prepared horseradish,medium shrimp,artichoke hearts,quinoa,soymilk,sunflower seeds,");
 	sort(expected);
 	printf("4.6: %s", compare_linked_list(head, expected) == 0 ? " PASSED\n" : " FAILED\n");
+	
+	// 4.7
+	head = deleteList(head);
+	head = related_k_dist(head,"turkey",0,0);
+	printf("4.7: %s", head == NULL ? " PASSED\n" : " FAILED\n");
+	
+	// 4.8
+	head = deleteList(head);
+	head = related_k_dist(head,"turkey",-1,0);
+	printf("4.8: %s", head == NULL ? " PASSED\n" : " FAILED\n");
 }
 
 void test_related_with_restrictions()
@@ -248,6 +262,9 @@ void test_related_with_restrictions()
 	// 5.9: Distance 2 from turkey. Avoid soymilk distance 1
 	// 5.10: both k values bigger than the matrix
 	// 5.11: avoid value 0
+	// 5.12: avoid value negative
+	// 5.13: source value negative
+	// 5.14: both values negative
 	
 	char expected[1024];
 	memset(AdjMat, 0, sizeof(AdjMat));
@@ -279,6 +296,7 @@ void test_related_with_restrictions()
 	strcpy(expected, "soymilk,turkey,gruyere cheese,medium shrimp,");
 	sort(expected);
 	printf("5.4: %s", compare_linked_list(head, expected) == 0 ? " PASSED\n" : " FAILED\n");
+	//print_ingredients(head);
 	
 	// 5.5
 	head = deleteList(head);
@@ -293,6 +311,7 @@ void test_related_with_restrictions()
 	strcpy(expected, "fresh breadcrumbs,");
 	sort(expected);
 	printf("5.6: %s", compare_linked_list(head, expected) == 0 ? " PASSED\n" : " FAILED\n");
+	//print_ingredients(head);
 	
 	// 5.7
 	head = deleteList(head);
@@ -307,6 +326,7 @@ void test_related_with_restrictions()
 	strcpy(expected, "soymilk,turkey,gruyere cheese,fresh breadcrumbs,tomato juice,prepared horseradish,medium shrimp,");
 	sort(expected);
 	printf("5.8: %s", compare_linked_list(head, expected) == 0 ? " PASSED\n" : " FAILED\n");
+	//print_ingredients(head);
 	
 	// 5.9
 	head = deleteList(head);
@@ -328,6 +348,24 @@ void test_related_with_restrictions()
 	strcpy(expected, "sunflower seeds,quinoa,turkey,artichoke hearts,gruyere cheese,fresh breadcrumbs,tomato juice,prepared horseradish,medium shrimp,");
 	sort(expected);
 	printf("5.11: %s", compare_linked_list(head, expected) == 0 ? "PASSED\n" : "FAILED\n");
+	
+	// 5.12: avoid value negative
+	head = deleteList(head);
+	head = related_with_restrictions("turkey", "soymilk", 10, -1);
+	strcpy(expected, "sunflower seeds,quinoa,turkey,artichoke hearts,gruyere cheese,fresh breadcrumbs,tomato juice,prepared horseradish,medium shrimp,");
+	sort(expected);
+	printf("5.12: %s", compare_linked_list(head, expected) == 0 ? "PASSED\n" : "FAILED\n");
+	
+	// 5.13: source value negative
+	head = deleteList(head);
+	head = related_with_restrictions("turkey", "soymilk", -1, 1);
+	printf("5.13: %s", head == NULL ? "PASSED\n" : "FAILED\n");
+	
+	// 5.14: both values negative
+	head = deleteList(head);
+	head = related_with_restrictions("turkey", "soymilk", -1, -1);
+	printf("5.14: %s", head == NULL ? "PASSED\n" : "FAILED\n");
+    
 }
 
 int compare_array(char actual[10][MAX_STR_LEN], const char *expected)
@@ -446,6 +484,7 @@ void test_substitute_ingredient()
 	sort(expected2);
 	sort(expected3);
 	printf("6.4: %s", (compare_array(recipe, expected) == 0) || (compare_array(recipe, expected2)) == 0 || ((compare_array(recipe, expected3)) == 0)? "PASSED\n" : "FAILED\n");
+	//print_recipe(recipe);
 	
 	// 6.5
 	set_recipe_5(recipe);
@@ -484,7 +523,6 @@ void test_substitute_ingredient()
 	strcpy(expected, "medium shrimp,prepared horseradish,turkey,tomato juice,fresh breadcrumbs,artichoke hearts,gruyere cheese,sunflower seeds,quinoa,soymilk,");
 	sort(expected);
 	printf("6.8: %s", (compare_array(recipe, expected) == 0)? "PASSED\n" : "FAILED\n");
-	//print_recipe(recipe);
 	
 	// 6.9
 	set_recipe_10(recipe);
@@ -534,11 +572,29 @@ void test_substitute_ingredient()
 
 int main()
 {
-	//test_print_ingredients();
-	//test_ingredient_index();
-	//test_related_ingredients();
-	//test_k_dist();
-	//test_related_with_restrictions();
-	//test_substitute_ingredient();
+	ghetto_load_ingredients();
+/* 	for (int i = 0; i < 10; i++)
+	{
+		for (int j = 0; j < 10; j++)
+		{
+			AdjMat[i][j] = 0;
+		}
+		
+		if (i < 9)
+		{
+			AdjMat[i][i + 1] = 1;
+		}
+		
+	} */
+	
+	
+	test_print_ingredients();
+	test_ingredient_index();
+	test_related_ingredients();
+	test_k_dist();
+	test_related_with_restrictions();
+	test_substitute_ingredient();
+	
 	//print_adj();
+	
 }
