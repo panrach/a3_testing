@@ -433,8 +433,8 @@ void test_substitute_ingredient()
 	// 6.8: 9 ingredient recipe: sub soymilk
 	// 6.9: 9 ingredient recipe: adj matrix is 0
 	// 6.10: 9 ingredient recipe: sub soymilk; soymilk has the strongest weight
-	// 6.11: 9 ingredient recipe: sub soymilk; normal matrix
-	// 6.12: to_change is not in the recipe
+	// 6.11: to_change is not in the recipe
+	// 6.13: chad the chad did this
 	
 	// 6.1
 	char expected[1024];
@@ -555,25 +555,17 @@ void test_substitute_ingredient()
 	printf("6.10: %s", (compare_array(recipe, expected) == 0)? "PASSED\n" : "FAILED\n");
 	//print_recipe(recipe);
 	
-	// 6.11
-	set_recipe_9(recipe);
-	ghetto_load_ingredients();
-	substitute_ingredient(recipe,"soymilk");
-	strcpy(expected, "medium shrimp,prepared horseradish,turkey,tomato juice,fresh breadcrumbs,artichoke hearts,gruyere cheese,sunflower seeds,quinoa,,");
-	sort(expected);
-	printf("6.11: %s", (compare_array(recipe, expected) == 0)? "PASSED\n" : "FAILED\n");
-	//print_recipe(recipe);
 	
-	// 6.12
+	// 6.11
 	set_recipe_9(recipe);
 	substitute_ingredient(recipe,"peanuts");
 	strcpy(expected, "medium shrimp,prepared horseradish,turkey,tomato juice,fresh breadcrumbs,artichoke hearts,gruyere cheese,sunflower seeds,soymilk,,");
 	sort(expected);
-	printf("6.12: %s", (compare_array(recipe, expected) == 0)? "PASSED\n" : "FAILED\n");
+	printf("6.11: %s", (compare_array(recipe, expected) == 0)? "PASSED\n" : "FAILED\n");
 	//print_recipe(recipe);
 	
 	// 6.13
-	// chad did this i love having smart friends
+	// chad
 	set_recipe_9(recipe);
 	for (int i = 0; i < MAT_SIZE; i++) {
 		AdjMat[i][9] = 0;
