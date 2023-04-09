@@ -385,7 +385,7 @@ int compare_array(char actual[10][MAX_STR_LEN], const char *expected)
 	return strcmp(buffer, expected);
 }
 
-void set_recipe_10(char recipe[10][MAX_STR_LEN])
+void set_recipe_9(char recipe[10][MAX_STR_LEN])
 {
 	strcpy(recipe[0], "medium shrimp");
 	strcpy(recipe[1], "prepared horseradish");
@@ -518,7 +518,7 @@ void test_substitute_ingredient()
 	printf("6.7: %s", (compare_array(recipe, expected) == 0) || (compare_array(recipe, expected2)) == 0 || ((compare_array(recipe, expected3)))? "PASSED\n" : "FAILED\n");
 	
 	// 6.8
-	set_recipe_10(recipe);
+	set_recipe_9(recipe);
 	substitute_ingredient(recipe,"soymilk");
 	strcpy(expected, "medium shrimp,prepared horseradish,turkey,tomato juice,fresh breadcrumbs,artichoke hearts,gruyere cheese,sunflower seeds,quinoa,,");
 	sort(expected);
@@ -526,7 +526,7 @@ void test_substitute_ingredient()
 	//print_recipe(recipe);
 	
 	// 6.9
-	set_recipe_10(recipe);
+	set_recipe_9(recipe);
 	
 	for (int i = 0; i < 10; i++)
 	{
@@ -543,7 +543,7 @@ void test_substitute_ingredient()
 	//print_recipe(recipe);
 	
 	// 6.10
-	set_recipe_10(recipe);
+	set_recipe_9(recipe);
 	for (int i = 0; i < 10; i++)
 	{
 		AdjMat[3][i] = 10;
@@ -556,7 +556,7 @@ void test_substitute_ingredient()
 	//print_recipe(recipe);
 	
 	// 6.11
-	set_recipe_10(recipe);
+	set_recipe_9(recipe);
 	ghetto_load_ingredients();
 	substitute_ingredient(recipe,"soymilk");
 	strcpy(expected, "medium shrimp,prepared horseradish,turkey,tomato juice,fresh breadcrumbs,artichoke hearts,gruyere cheese,sunflower seeds,quinoa,,");
@@ -565,7 +565,7 @@ void test_substitute_ingredient()
 	//print_recipe(recipe);
 	
 	// 6.12
-	set_recipe_10(recipe);
+	set_recipe_9(recipe);
 	substitute_ingredient(recipe,"peanuts");
 	strcpy(expected, "medium shrimp,prepared horseradish,turkey,tomato juice,fresh breadcrumbs,artichoke hearts,gruyere cheese,sunflower seeds,soymilk,,");
 	sort(expected);
@@ -573,10 +573,11 @@ void test_substitute_ingredient()
 	//print_recipe(recipe);
 	
 	// 6.13
-	set_recipe_10(recipe);
+	// chad did this i love having smart friends
+	set_recipe_9(recipe);
 	for (int i = 0; i < MAT_SIZE; i++) {
-	AdjMat[i][9] = 0;
-	AdjMat[9][i] = 0;
+		AdjMat[i][9] = 0;
+		AdjMat[9][i] = 0;
 	}
 	strcpy(recipe[9], "");
 
@@ -612,7 +613,7 @@ int main()
 	//test_related_ingredients();
 	//test_k_dist();
 	//test_related_with_restrictions();
-	test_substitute_ingredient();
+	//test_substitute_ingredient();
 	
 	//print_adj();
 	
