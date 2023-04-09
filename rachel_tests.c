@@ -1,4 +1,4 @@
-#include "ingredient_graphs_1009041145.c"
+#include "ingredient_graphs.c"
 
 void make_list()
 {
@@ -454,7 +454,7 @@ void test_substitute_ingredient()
 	substitute_ingredient(recipe,"tomato juice");
 	strcpy(expected, ",,,,,,,,,,");
 	sort(expected);
-	printf("6.1: %s", compare_array(recipe, expected) == 0 ? "PASSED\n" : "FAILED\n");
+	printf("6.1: %s", compare_array(recipe, expected) == 0 ? " PASSED\n" : " FAILED\n");
 	
 	// 6.2
 	strcpy(recipe[0], "medium shrimp");
@@ -463,7 +463,7 @@ void test_substitute_ingredient()
 	substitute_ingredient(recipe,"prepared horseradish");
 	strcpy(expected, "medium shrimp,artichoke hearts,,,,,,,,,");
 	sort(expected);
-	printf("6.2: %s", compare_array(recipe, expected) == 0 ? "PASSED\n" : "FAILED\n");
+	printf("6.2: %s", compare_array(recipe, expected) == 0 ? " PASSED\n" : " FAILED\n");
 	//print_recipe(recipe);
 	
 	// 6.3
@@ -471,7 +471,7 @@ void test_substitute_ingredient()
 	substitute_ingredient(recipe,"soymilk");
 	strcpy(expected, "prepared horseradish,medium shrimp,tomato juice,turkey,artichoke hearts,,,,,,");
 	sort(expected);
-	printf("6.3: %s", (compare_array(recipe, expected) == 0) || (compare_array(recipe, expected2) == 0) ? "PASSED\n" : "FAILED\n");
+	printf("6.3: %s", (compare_array(recipe, expected) == 0) || (compare_array(recipe, expected2) == 0) ? " PASSED\n" : " FAILED\n");
 	//print_recipe(recipe);
 	
 	// 6.4
@@ -483,7 +483,7 @@ void test_substitute_ingredient()
 	sort(expected);
 	sort(expected2);
 	sort(expected3);
-	printf("6.4: %s", (compare_array(recipe, expected) == 0) || (compare_array(recipe, expected2)) == 0 || ((compare_array(recipe, expected3)) == 0)? "PASSED\n" : "FAILED\n");
+	printf("6.4: %s", (compare_array(recipe, expected) == 0) || (compare_array(recipe, expected2)) == 0 || ((compare_array(recipe, expected3)) == 0)? " PASSED\n" : " FAILED\n");
 	//print_recipe(recipe);
 	
 	// 6.5
@@ -493,7 +493,7 @@ void test_substitute_ingredient()
 	strcpy(expected2, "soymilk,turkey,sunflower seeds,tomato juice,prepared horseradish,,,,,,");
 	sort(expected);
 	sort(expected2);
-	printf("6.5: %s", (compare_array(recipe, expected) == 0) || (compare_array(recipe, expected2)) == 0? "PASSED\n" : "FAILED\n");
+	printf("6.5: %s", (compare_array(recipe, expected) == 0) || (compare_array(recipe, expected2)) == 0? " PASSED\n" : " FAILED\n");
 	//print_recipe(recipe);
 	
 	// 6.6
@@ -503,7 +503,7 @@ void test_substitute_ingredient()
 	strcpy(expected2, "soymilk,turkey,medium shrimp,sunflower seeds,prepared horseradish,,,,,,");
 	sort(expected);
 	sort(expected2);
-	printf("6.6: %s", (compare_array(recipe, expected) == 0) || (compare_array(recipe, expected2)) == 0? "PASSED\n" : "FAILED\n");
+	printf("6.6: %s", (compare_array(recipe, expected) == 0) || (compare_array(recipe, expected2)) == 0? " PASSED\n" : " FAILED\n");
 	//print_recipe(recipe);
 	
 	// 6.7
@@ -515,14 +515,14 @@ void test_substitute_ingredient()
 	sort(expected);
 	sort(expected2);
 	sort(expected3);
-	printf("6.7: %s", (compare_array(recipe, expected) == 0) || (compare_array(recipe, expected2)) == 0 || ((compare_array(recipe, expected3)))? "PASSED\n" : "FAILED\n");
+	printf("6.7: %s", (compare_array(recipe, expected) == 0) || (compare_array(recipe, expected2)) == 0 || ((compare_array(recipe, expected3)))? " PASSED\n" : " FAILED\n");
 	
 	// 6.8
 	set_recipe_9(recipe);
 	substitute_ingredient(recipe,"soymilk");
 	strcpy(expected, "medium shrimp,prepared horseradish,turkey,tomato juice,fresh breadcrumbs,artichoke hearts,gruyere cheese,sunflower seeds,quinoa,,");
 	sort(expected);
-	printf("6.8: %s", (compare_array(recipe, expected) == 0)? "PASSED\n" : "FAILED\n");
+	printf("6.8: %s", (compare_array(recipe, expected) == 0)? " PASSED\n" : " FAILED\n");
 	//print_recipe(recipe);
 	
 	// 6.9
@@ -539,7 +539,7 @@ void test_substitute_ingredient()
 	substitute_ingredient(recipe,"soymilk");
 	strcpy(expected, "medium shrimp,prepared horseradish,turkey,tomato juice,fresh breadcrumbs,artichoke hearts,gruyere cheese,sunflower seeds,,soymilk,");
 	sort(expected);
-	printf("6.9: %s", (compare_array(recipe, expected) == 0)? "PASSED\n" : "FAILED\n");
+	printf("6.9: %s", (compare_array(recipe, expected) == 0)? " PASSED\n" : " FAILED\n");
 	//print_recipe(recipe);
 	
 	// 6.10
@@ -579,7 +579,6 @@ void test_substitute_ingredient()
 		AdjMat[i][9] = 0;
 		AdjMat[9][i] = 0;
 	}
-	strcpy(recipe[9], "");
 
 	substitute_ingredient(recipe, "soymilk");
 	strcpy(expected, "medium shrimp,prepared horseradish,turkey,tomato juice,fresh breadcrumbs,artichoke hearts,gruyere cheese,sunflower seeds,soymilk,,");
