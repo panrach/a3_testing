@@ -578,6 +578,8 @@ void test_substitute_ingredient()
 	printf("6.13: %s", (compare_array(recipe, expected) == 0) ? "PASSED\n" : "FAILED\n");
 	//print_recipe(recipe);
 	
+	printf("done");
+	
 
 }
 
