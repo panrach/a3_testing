@@ -579,7 +579,6 @@ void test_substitute_ingredient()
 	//print_recipe(recipe);
 	
 	printf("done");
-	printf("\nreally done");
 	
 
 }
