@@ -434,7 +434,7 @@ void test_substitute_ingredient()
 	// 6.9: 9 ingredient recipe: adj matrix is 0
 	// 6.10: 9 ingredient recipe: sub soymilk; soymilk has the strongest weight
 	// 6.11: to_change is not in the recipe
-	// 6.13: chad the chad did this
+	// 6.13: chad's additional test
 	
 	// 6.1
 	char expected[1024];
