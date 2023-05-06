@@ -577,29 +577,11 @@ void test_substitute_ingredient()
 	sort(expected);
 	printf("6.13: %s", (compare_array(recipe, expected) == 0) ? "PASSED\n" : "FAILED\n");
 	//print_recipe(recipe);
-	
-	printf("done");
-	
-
 }
 
 int main()
 {
 	ghetto_load_ingredients();
-/* 	for (int i = 0; i < 10; i++)
-	{
-		for (int j = 0; j < 10; j++)
-		{
-			AdjMat[i][j] = 0;
-		}
-		
-		if (i < 9)
-		{
-			AdjMat[i][i + 1] = 1;
-		}
-		
-	} */
-	
 	
 	//test_print_ingredients();
 	//test_ingredient_index();
